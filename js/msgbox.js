@@ -83,7 +83,7 @@ class msgbox{
 
 		if (data.type == "loading") {
 			container = `			
-			<div class="msgbox-container">				
+			<div class="msgbox-container" id="msgboxContainer">				
 				<div class="msgbox-body">				
 					${(data.typeloading && data.typeloading == "line") ? this.linePreloader() : this.loader() }
 					<span>${(data.message == false ) ? "" : (data.message) ? data.message : "Procesando ..."  }</span>
@@ -91,7 +91,7 @@ class msgbox{
 			</div>`;
 		}else{
 			container = `			
-			<div class="msgbox-container">
+			<div class="msgbox-container" id="msgboxContainer">
 				<div class="msgbox-header">		
 					${(data.icon == false) ? "" : `<i class="${data.typeicon} fa-6x text-${data.type}"></i>` }
 				</div>
@@ -135,8 +135,12 @@ class msgbox{
 }
 document.body.addEventListener("click",e=>{
 	if (e.target.id === "btnCloseMgsbox") {
-		document.body.style.overflow = 'initial'; 
-		document.getElementById("msgbox").remove();
+		document.body.style.overflow = 'initial';
+		let elem = document.getElementById("msgboxContainer");
+		elem.classList.add("zoomOut");
+		elem.addEventListener("animationend", ()=>{
+			document.getElementById("msgbox").remove();
+		},false)		
 	}
 })
 document.body.addEventListener("click", e=>{
