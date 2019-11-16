@@ -24,12 +24,15 @@ class msgbox{
 	}
 	removeToast(elem,delay){
 		setTimeout(()=>{
-			elem.classList.add("fadeOut");
-			setTimeout(()=>{
+			elem.classList.add("slideRight");
+			elem.addEventListener("animationend", ()=>{
 				elem.remove();
-			},800)
-		},(delay) ? delay : 4000)
-	}
+			},false);
+			// setTimeout(()=>{
+			// 	elem.remove();
+			// },300)
+		},(delay) ? delay : 5000)
+	}	
 	toast(data){
 		let toast = undefined,
 		contToast = document.createElement("div");
@@ -137,8 +140,12 @@ document.body.addEventListener("click",e=>{
 	}
 })
 document.body.addEventListener("click", e=>{
+	let element = e.target.parentElement.parentElement;
 	if (e.target.id === "btnCloseToast") {
-		e.target.parentElement.parentElement.remove();
+		element.classList.add("slideRight");
+		element.addEventListener("animationend", ()=>{
+			element.remove();
+		},true);
 	}
 })
 msgbox = new msgbox();
